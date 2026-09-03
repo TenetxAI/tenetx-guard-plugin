@@ -256,10 +256,10 @@ class TrustTests(unittest.TestCase):
 
 
 class HooksConfigTests(unittest.TestCase):
-    """Both copies of the hook config must stay in step and declare the
-    session-lifecycle events the bootstrap should receive."""
+    """Both copies of the hook config must stay in step, and must not declare
+    events Devin does not deliver to plugins."""
 
-    REQUIRED = ("SessionStart", "SessionEnd")
+    UNSUPPORTED = ("SessionStart", "SessionEnd")
 
     def _configs(self) -> list[dict]:
         return [
@@ -271,10 +271,10 @@ class HooksConfigTests(unittest.TestCase):
         first, second = self._configs()
         self.assertEqual(first, second)
 
-    def test_session_lifecycle_events_are_declared(self) -> None:
+    def test_no_unsupported_events_are_declared(self) -> None:
         for config in self._configs():
-            for event in self.REQUIRED:
-                self.assertIn(event, config)
+            for event in self.UNSUPPORTED:
+                self.assertNotIn(event, config)
 
     def test_every_command_fails_open_when_the_bootstrap_is_missing(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

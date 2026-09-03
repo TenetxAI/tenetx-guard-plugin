@@ -1,16 +1,4 @@
 {
-  "SessionStart": [
-    {
-      "matcher": "",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "sh -c 'B=; for R in \"${CLAUDE_PLUGIN_ROOT:-}\" \"${DEVIN_PLUGIN_ROOT:-}\" \"${PLUGIN_ROOT:-}\" \"${TENETX_DEVIN_PLUGIN_ROOT:-}\"; do if [ -n \"$R\" ] && [ -f \"$R/hooks/tenetx_devin_hook.py\" ]; then B=\"$R/hooks/tenetx_devin_hook.py\"; break; fi; done; if [ -z \"$B\" ]; then for C in \"$HOME\"/.devin/plugins/*/hooks/tenetx_devin_hook.py \"$HOME\"/.devin/plugins/*/*/hooks/tenetx_devin_hook.py \"$HOME\"/.config/devin/plugins/*/hooks/tenetx_devin_hook.py \"$HOME\"/.config/devin/plugins/*/*/hooks/tenetx_devin_hook.py \"${DEVIN_PROJECT_DIR:-.}/.devin/tenetx-hook.py\"; do if [ -f \"$C\" ]; then B=\"$C\"; break; fi; done; fi; if [ -n \"$B\" ]; then exec python3 \"$B\"; fi; cat >/dev/null 2>&1; mkdir -p \"$HOME/.tenetx\" 2>/dev/null; printf \"%s\\n\" \"{\\\"ts\\\":\\\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\\\",\\\"hook\\\":\\\"windsurf-devin-plugin\\\",\\\"reason\\\":\\\"bootstrap_not_found\\\"}\" >> \"$HOME/.tenetx/capture_failures.jsonl\" 2>/dev/null; exit 0'",
-          "timeout": 10
-        }
-      ]
-    }
-  ],
   "PreToolUse": [
     {
       "matcher": "",
@@ -72,18 +60,6 @@
     }
   ],
   "PostCompaction": [
-    {
-      "matcher": "",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "sh -c 'B=; for R in \"${CLAUDE_PLUGIN_ROOT:-}\" \"${DEVIN_PLUGIN_ROOT:-}\" \"${PLUGIN_ROOT:-}\" \"${TENETX_DEVIN_PLUGIN_ROOT:-}\"; do if [ -n \"$R\" ] && [ -f \"$R/hooks/tenetx_devin_hook.py\" ]; then B=\"$R/hooks/tenetx_devin_hook.py\"; break; fi; done; if [ -z \"$B\" ]; then for C in \"$HOME\"/.devin/plugins/*/hooks/tenetx_devin_hook.py \"$HOME\"/.devin/plugins/*/*/hooks/tenetx_devin_hook.py \"$HOME\"/.config/devin/plugins/*/hooks/tenetx_devin_hook.py \"$HOME\"/.config/devin/plugins/*/*/hooks/tenetx_devin_hook.py \"${DEVIN_PROJECT_DIR:-.}/.devin/tenetx-hook.py\"; do if [ -f \"$C\" ]; then B=\"$C\"; break; fi; done; fi; if [ -n \"$B\" ]; then exec python3 \"$B\"; fi; cat >/dev/null 2>&1; mkdir -p \"$HOME/.tenetx\" 2>/dev/null; printf \"%s\\n\" \"{\\\"ts\\\":\\\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\\\",\\\"hook\\\":\\\"windsurf-devin-plugin\\\",\\\"reason\\\":\\\"bootstrap_not_found\\\"}\" >> \"$HOME/.tenetx/capture_failures.jsonl\" 2>/dev/null; exit 0'",
-          "timeout": 10
-        }
-      ]
-    }
-  ],
-  "SessionEnd": [
     {
       "matcher": "",
       "hooks": [

@@ -17,15 +17,16 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+# Plugin hooks cannot use SessionStart / SessionEnd — Devin does not deliver
+# them to plugins. Session identity therefore comes from `session_id` on the
+# events below, which the guard already prefers over the per-turn `prompt_id`.
 EVENTS = (
-    "SessionStart",
     "PreToolUse",
     "PostToolUse",
     "PermissionRequest",
     "UserPromptSubmit",
     "Stop",
     "PostCompaction",
-    "SessionEnd",
 )
 
 # The hook must stay inside its own timeout: the bootstrap allows 3s to fetch
