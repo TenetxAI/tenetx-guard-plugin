@@ -1,6 +1,6 @@
 {
   "name": "tenetx-governance",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TenetX policy enforcement and agent-observability capture for Devin cloud sessions, the Devin CLI, and Devin Desktop.",
   "author": { "name": "TenetX" },
   "homepage": "https://tenetx.ai",

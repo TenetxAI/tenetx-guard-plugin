@@ -125,9 +125,10 @@ diagnosing a fail-open, and reading a verdict.
   in-repo hook — `tenetx install devin-cloud` writes `.devin/hooks.v1.json`
   and its hook script, which Devin clones with the repo. Both can be installed
   at once; the guard de-duplicates by tool-call id.
-- **No `SessionStart` / `SessionEnd`.** Devin does not deliver them to plugins.
-  Session identity comes from `session_id` on the other events, which the guard
-  already prefers over the per-turn `prompt_id`.
+- **`SessionStart` / `SessionEnd` are declared** so a session that delivers them
+  is captured at both ends. If Devin omits them, identity still comes from
+  `session_id` on the other events, which the guard already prefers over the
+  per-turn `prompt_id`.
 - **Devin plugins are in closed beta**, so the manifest and hook contract may
   still change.
 - Every fail-open path writes one JSON line to

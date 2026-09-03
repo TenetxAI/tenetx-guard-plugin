@@ -2,9 +2,9 @@
 """Structural validation for this plugin.
 
 Catches the mistakes that produce a *silently* ungoverned session rather than
-an error: a hook config that drifted between its two copies, a declared event
-Devin never delivers to plugins, a hook command pointing at a bootstrap that
-is not in the tree, a skill Devin will refuse to load.
+an error: a hook config that drifted between its two copies, an unknown hook
+event, a hook command pointing at a bootstrap that is not in the tree, a skill
+Devin will refuse to load.
 
     python3 scripts/validate_plugin.py
 """
@@ -23,15 +23,15 @@ MANIFESTS = (".devin-plugin/plugin.json", ".claude-plugin/plugin.json")
 HOOK_CONFIGS = ("hooks.json", "hooks/hooks.json")
 BOOTSTRAP = "hooks/tenetx_devin_hook.py"
 
-# Devin delivers every event except these to plugin hooks.
-UNSUPPORTED_EVENTS = ("SessionStart", "SessionEnd")
 SUPPORTED_EVENTS = (
+    "SessionStart",
     "PreToolUse",
     "PostToolUse",
     "PermissionRequest",
     "UserPromptSubmit",
     "Stop",
     "PostCompaction",
+    "SessionEnd",
 )
 
 # Lowercase alphanumeric with single - or . separators.
@@ -81,12 +81,7 @@ def check_hook_configs(errors: list[str]) -> None:
                 "scripts/gen_hooks_json.py"
             )
     for rel, body in present.items():
-        for event in UNSUPPORTED_EVENTS:
-            if event in body:
-                errors.append(f"{rel}: Devin does not deliver {event} to plugins")
         for event, rows in body.items():
-            if event in UNSUPPORTED_EVENTS:
-                continue
             if event not in SUPPORTED_EVENTS:
                 errors.append(f"{rel}: unknown event {event!r}")
             if not isinstance(rows, list) or not rows:
