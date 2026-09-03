@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Validate plugin layout
+        run: python3 scripts/validate_plugin.py
+      - name: Hook config is in step with its generator
+        run: |
+          python3 scripts/gen_hooks_json.py
+          git diff --exit-code -- hooks.json hooks/hooks.json
+      - name: Tests
+        run: python3 -m unittest discover -s tests -v
